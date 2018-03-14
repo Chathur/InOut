@@ -1,0 +1,1 @@
+export const GATEWAY_URL: string = "http://sphere.embla.asia/";

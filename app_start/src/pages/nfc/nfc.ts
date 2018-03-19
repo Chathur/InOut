@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { authUserDataModel } from './user.auth.data'
-import { NFC } from '@ionic-native/nfc';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, Platform } from 'ionic-angular';
+import { authUserDataModel } from './user.auth.data';
+import { NFC, Ndef } from '@ionic-native/nfc';
+import { Subscription } from 'rxjs/Rx';
 
 /**
  * Generated class for the NfcPage page.
@@ -16,38 +17,50 @@ import { NFC } from '@ionic-native/nfc';
   templateUrl: 'nfc.html',
 })
 export class NfcPage {
+  readingTag: boolean = true;
 
-  loggedUser: authUserDataModel = new authUserDataModel();
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public nfc: NFC,
+    public ndef: Ndef,
+    public alertCtrl: AlertController,
+    public platform: Platform) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private nfc: NFC) {
-    debugger;
-    this.loggedUser = navParams.data.user;
-    this.readNFC();
   }
 
-  private readNFC(){
-    debugger;
-    this.nfc.addTagDiscoveredListener(nfcEvent =>
-    this.sesReadNFC(nfcEvent.tag)).subscribe(data =>{
-      debugger;
-      if(data && data.tag && data.tag.id)
-      {
-        let tagId = this.nfc.bytesToHexString(data.tag.id);
-        console.log(tagId);
-      }
+
+
+  public readNFC() {
+    if (this.readingTag) {
+      this.platform.ready().then(() => {
+        this.initNFC();
+      });
+    }
+
+  }
+
+  private initNFC() {
+
+    this.showAlert("Keep your phone closer to NFC tag");
+    this.nfc.addNdefListener()
+      .subscribe(data => {
+        this.showAlert(this.nfc.bytesToString(data.tag.ndefMessage[0].payload).substring(3));
+        this.readingTag = false;
+      },
+        err => {
+          this.showAlert(err);
+        })
+
+  }
+
+  private showAlert(message: string) {
+    let alert = this.alertCtrl.create({
+      title: '',
+      subTitle: message,
+      buttons: ['OK']
     });
+    alert.present();
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NfcPage');
-  }
-
-  sesReadNFC(data): void {
-    console.log('NFC_WORKING');
-}
-
-failNFC(err) {
-    console.log('NFC Failed :' + JSON.stringify(err));
-}
 
 }

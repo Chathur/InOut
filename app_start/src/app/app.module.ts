@@ -4,34 +4,34 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NFC, Ndef } from '@ionic-native/nfc';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { DetailPage } from '../pages/detail/detail';
 import { LoginPage } from '../pages/login/login';
 import { NfcPage } from '../pages/nfc/nfc';
-import { PeopleDataProvider } from '../providers/people-data/people-data';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { AttendanceServiceProvider } from '../providers/attendance-service/attendance-service';
+import { TokenInterceptor } from '../providers/interceptor-service/token-Interceptor';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    DetailPage,
     LoginPage,
     NfcPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    DetailPage,
     LoginPage,
     NfcPage
   ],
@@ -39,10 +39,11 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    PeopleDataProvider,
-    AuthServiceProvider,
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     NFC,
-    Ndef
+    Ndef,
+    AttendanceServiceProvider,
+    AuthServiceProvider,
   ]
 })
 export class AppModule {}

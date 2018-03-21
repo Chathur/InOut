@@ -1,7 +1,7 @@
-import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GATEWAY_URL } from '../../configurations/constants';
+import { JwtHelper } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -14,32 +14,33 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class AuthServiceProvider {
 
-  constructor(private http: Http) {
-    console.log('Using AuthServiceProvider');
+  jwtHelper: JwtHelper = new JwtHelper();
+
+  constructor(private http: HttpClient) {
   }
 
   public login(userName: string, password: string) {
 
     let data = "grant_type=password&username=" + userName + "&password=" + encodeURIComponent(password);
-    var options = new RequestOptions({
-      headers: new Headers({ "Content-Type": "application/x-www-form-urlencoded" })
-    });
+    var options = {
+      headers: new HttpHeaders({ "Content-Type": "application/x-www-form-urlencoded" })
+    };
 
+
+    
     return this.http.post(GATEWAY_URL + 'oauth/token', data, options)
-                    .map(this.authrizationMapper)
-                    // .catch(this.handleError);
+      .map(response => JSON.parse(JSON.stringify(response)));
+
   }
 
-  private authrizationMapper(res: Response) {
-    return res.json();
+  public getToken(): string{
+    return localStorage.getItem('token');
   }
 
-  private handleError(error: Response | any) {
-    if (error) {
-      console.info(error);
-    }
-
-    return Observable.throw(error);
+  public isAuthenticated(): boolean {
+    return this.jwtHelper.isTokenExpired(this.getToken());
   }
+
+
 
 }

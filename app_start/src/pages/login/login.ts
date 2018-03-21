@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NfcPage } from '../nfc/nfc';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -21,12 +22,12 @@ import { NfcPage } from '../nfc/nfc';
 
 
 export class LoginPage {
-  private loader = this.loadingCtrl.create({ content: 'Loading..' });
+  private loader;
   public loginForm: FormGroup;;
   private nfcPage;
+ 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthServiceProvider, private formBuilder: FormBuilder, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-    let loader = this.loadingCtrl.create({ content: 'Loading..' });
     this.initializeLoginForm();
     this.nfcPage = NfcPage;
   }
@@ -36,19 +37,25 @@ export class LoginPage {
   }
 
   public onLoginClicked() {
-    this.loader.present();
-    this.authProvider.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(result => {
-      this.navCtrl.push(this.nfcPage, {user: result});
-      this.loader.dismiss();
-    },
-      error => {
-        if (error._body) {
-          this.showToastWithCloseButton(JSON.parse(error._body).error_description);
+    this.initializeLoader();
+
+    this.loader.present().then(() => {
+      this.authProvider.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(response => {
+        let token = response && response.access_token;
+        if (token) {
+          localStorage.setItem('currentUser', JSON.stringify({ username: "", token: token }));
+          localStorage.setItem('token', token);
         }
-        console.log(error);
-        this.loader.dismiss();
-      }
-    );
+        this.navCtrl.setRoot(this.nfcPage, { user: response });
+      },
+        error => {
+          if (error._body) {
+            this.showToastWithCloseButton(JSON.parse(error._body).error_description);
+          }
+        }
+      );
+    }).then(() => this.loader.dismiss());
+  
   }
 
   private initializeLoginForm() {
@@ -56,6 +63,10 @@ export class LoginPage {
       username: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])],
     });
+  }
+
+  private initializeLoader() {
+    this.loader = this.loadingCtrl.create({ content: 'Loading..' });
   }
 
   private showToastWithCloseButton(message: string) {
@@ -66,6 +77,8 @@ export class LoginPage {
     });
     toast.present();
   }
+
+
 
 }
 

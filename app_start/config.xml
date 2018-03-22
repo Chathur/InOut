@@ -91,4 +91,5 @@
     <plugin name="phonegap-nfc" spec="^0.7.1" />
     <engine name="android" spec="^7.0.0" />
     <allow-navigation href="http://10.10.1.119:8100" />
+    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
 </widget>

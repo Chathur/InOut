@@ -14,11 +14,11 @@ export abstract class ConfigurableHttpInterceptor implements HttpInterceptor {
     return !this.pathMatch || this.pathMatch.test(path);
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return (!this.isPathMatching(req.urlWithParams)) ? next.handle(req) :  this._intercept(req, next);
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return (!this.isPathMatching(request.urlWithParams)) ? next.handle(request) :  this._intercept(request, next);
   }
 
-  protected abstract _intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
+  protected abstract _intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
 }
 
 /*
@@ -35,11 +35,9 @@ export class TokenInterceptor extends ConfigurableHttpInterceptor {
 
   protected _intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return Observable.create((observer: any) => {
-      setTimeout(() => {
         const authService = this.injector.get(AuthServiceProvider)
         observer.next(authService.getToken())
         observer.complete()
-      })
     })
     .mergeMap((token: string) =>{
       request = request.clone({

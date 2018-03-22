@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NFC, Ndef } from '@ionic-native/nfc';
+import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -44,6 +45,7 @@ import { TokenInterceptor } from '../providers/interceptor-service/token-Interce
     Ndef,
     AttendanceServiceProvider,
     AuthServiceProvider,
+    Network
   ]
 })
 export class AppModule {}

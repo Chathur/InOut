@@ -8,7 +8,7 @@ import { Network } from '@ionic-native/network';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage: any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public toastCtrl: ToastController, private network: Network) {
     platform.ready().then(() => {
@@ -19,28 +19,22 @@ export class MyApp {
 
       let type = this.network.type;
 
-      if(type == "unknown" || type == "none" || type == undefined){
+      if (type == "unknown" || type == "none" || type == undefined) {
         this.showToastWithCloseButton("No internet connetion");
       }
-      
+
       let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
         this.showToastWithCloseButton('network was disconnected :-(');
       });
-      
-      // stop disconnect watch
-     // disconnectSubscription.unsubscribe();
-      
-      // watch network for a connection
       let connectSubscription = this.network.onConnect().subscribe(() => {
         this.showToastWithCloseButton('network connected :-)');
       });
-      
-      // stop connect watch
-      //connectSubscription.unsubscribe();
-    
-      
+
+
     });
   }
+
+
 
   private showToastWithCloseButton(message: string) {
     const toast = this.toastCtrl.create({
@@ -51,6 +45,6 @@ export class MyApp {
     toast.present();
   }
 
-  
+
 }
 

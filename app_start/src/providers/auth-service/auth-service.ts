@@ -29,7 +29,7 @@ export class AuthServiceProvider {
 
     
     return this.http.post(GATEWAY_URL + 'oauth/token', data, options)
-      .map(response => JSON.parse(JSON.stringify(response)));
+                    .map(response => JSON.parse(JSON.stringify(response)));
 
   }
 

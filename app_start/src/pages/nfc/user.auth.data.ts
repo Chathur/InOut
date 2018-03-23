@@ -13,3 +13,9 @@ export class authUserDataModel
     role: string;
     token_type: string;
 }
+
+export enum attendanceTypeEnum
+{
+    In = 0,
+    Out = 1
+}

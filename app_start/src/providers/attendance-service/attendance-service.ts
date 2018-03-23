@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { GATEWAY_URL } from '../../configurations/constants';
+import { genericModel } from './attendance.data';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -18,8 +19,9 @@ export class AttendanceServiceProvider {
   constructor(public http: HttpClient) {
   }
 
-  getAllEmployees(): Observable<{}>{
-    return this.http.get(GATEWAY_URL + 'api/employeeDetails/getallemployees');
+  addAttendanceToDB(employeeId: number, attendanceType: number): Observable<genericModel>{
+    return this.http.get(GATEWAY_URL + 'api/attendance/addAttendanceFromMobile/' + employeeId + '/' + attendanceType)
+                    .map(response => JSON.parse(JSON.stringify(response)));
   }
 
 

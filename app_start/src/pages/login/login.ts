@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NfcPage } from '../nfc/nfc';
+import { HomePage } from '../home/home';
 
 
 /**
@@ -24,12 +24,12 @@ import { NfcPage } from '../nfc/nfc';
 export class LoginPage {
   private loader;
   public loginForm: FormGroup;;
-  private nfcPage;
+  private homePage;
  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthServiceProvider, private formBuilder: FormBuilder, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     this.initializeLoginForm();
-    this.nfcPage = NfcPage;
+    this.homePage = HomePage;
   }
 
   ionViewDidLoad() {
@@ -46,7 +46,7 @@ export class LoginPage {
           localStorage.setItem('currentUser', JSON.stringify({ username: "", token: token }));
           localStorage.setItem('token', token);
         }
-        this.navCtrl.setRoot(this.nfcPage, { user: response });
+        this.navCtrl.setRoot(this.homePage, { user: response });
       },
         error => {
           if (error._body) {

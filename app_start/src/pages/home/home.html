@@ -1,15 +1,28 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
     <ion-title>
-      People
+      Menus
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-list>
-  <ion-item *ngFor="let person of people" (click)="loadDetail(person)">
-    {{person.name.first}}{{person.name.last}}
-  </ion-item>
-  </ion-list>
+<ion-content class="card-background-page">
+  <ion-card>
+    <ion-item (click)="goToNfcPage()" style="background-color: #5a83da;">
+      <img src="assets/imgs/card6.png" />
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item style="background-color: #ffcc00;">
+      <img src="assets/imgs/card4.png" />
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item style="background-color: #dae1e9;">
+      <img src="assets/imgs/card5.png" />
+    </ion-item>
+  </ion-card>
 </ion-content>

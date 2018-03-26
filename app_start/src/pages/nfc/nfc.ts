@@ -24,6 +24,8 @@ export class NfcPage {
   private user: authUserDataModel = new authUserDataModel();
   private homePage;
   private isOkButtonClicked: boolean = false;
+  public date: string;
+  public todaysAttendanceData: any  = [];
 
   constructor(
     public navCtrl: NavController,
@@ -35,10 +37,11 @@ export class NfcPage {
     public platform: Platform) {
       this.homePage = HomePage;
       this.user = navParams.data;
+      this.date = new Date().toISOString();
+      this.getCurrentDateInOut();
   }
 
   public readNFC() {
-  // this.attendanceProvider.addAttendanceToDB(+this.user.id, attendanceTypeEnum.In);
      this.nfc.enabled().then(() => {
       this.platform.ready().then(() => {
         this.initNFC();
@@ -56,11 +59,9 @@ export class NfcPage {
       .subscribe(data => {
         let tagId = this.nfc.bytesToHexString(data.tag.id);
         this.addAttendancetoDB(tagId);
-        this.navCtrl.setRoot(this.homePage, { user: this.user });
       },
         err => {
           this.showAlert(err);
-          this.navCtrl.setRoot(this.homePage, { user: this.user });
         });
     }
   }
@@ -83,6 +84,12 @@ export class NfcPage {
         this.showAlert("Error: Please try again");
       }
     });
+  }
+
+  private getCurrentDateInOut(){
+    this.attendanceProvider.getCurrentDateInOut(+this.user.id).subscribe(response => {
+      this.todaysAttendanceData = response.Data[0];
+    })
   }
 
   private showAlert(message: string) {

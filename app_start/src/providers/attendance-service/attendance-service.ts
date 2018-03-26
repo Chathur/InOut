@@ -24,5 +24,10 @@ export class AttendanceServiceProvider {
                     .map(response => JSON.parse(JSON.stringify(response)));
   }
 
+  getCurrentDateInOut(employeeId: number): Observable<genericModel>{
+    return this.http.get(GATEWAY_URL + 'api/attendance/getCurrentDateInOut/' + employeeId)
+                    .map(response => JSON.parse(JSON.stringify(response)));
+  }
+
 
 }

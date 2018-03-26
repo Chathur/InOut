@@ -23,7 +23,7 @@
         <ion-item>
           <ion-icon name="calendar" item-left primary></ion-icon>
           <ion-label>Date:</ion-label>
-          <ion-datetime [(ngModel)]="date"></ion-datetime>
+          <ion-datetime [ngModel]="date"></ion-datetime>
         </ion-item>
       </ion-card>
   
@@ -31,7 +31,7 @@
           <ion-item>
               <ion-icon name="time" item-left primary></ion-icon>
               <ion-label>First in:</ion-label>
-              <ion-datetime [(ngModel)]="date"></ion-datetime>
+              <ion-datetime displayFormat="h:mm a" [ngModel]="todaysAttendanceData.InTime"></ion-datetime>
             </ion-item>
       </ion-card>
   
@@ -39,7 +39,7 @@
           <ion-item>
               <ion-icon name="time" item-left primary></ion-icon>
               <ion-label>Last out:</ion-label>
-              <ion-datetime [(ngModel)]="date"></ion-datetime>
+              <ion-datetime displayFormat="h:mm a" [(ngModel)]="todaysAttendanceData.OutTime"></ion-datetime>
             </ion-item>
       </ion-card>
   

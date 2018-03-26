@@ -1,0 +1,57 @@
+<!--
+  Generated template for the LeavePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>LeavePage</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="cards-bg">
+  <div class="header-parent">
+    <img src="assets/imgs/leaveBanner.jpg">
+
+    <ion-card>
+      <ion-item>
+        <ion-icon name="calendar" item-left primary></ion-icon>
+        <ion-label>Date:</ion-label>
+        <ion-datetime [(ngModel)]="date"></ion-datetime>
+      </ion-item>
+
+      <!-- <ion-item>
+        <ion-card-content>
+        
+        </ion-card-content>
+        <ion-card-content>
+           
+           </ion-card-content>
+      </ion-item> -->
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-icon name="time" item-left primary></ion-icon>
+            <ion-label>First in:</ion-label>
+            <ion-datetime [(ngModel)]="date"></ion-datetime>
+          </ion-item>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-icon name="time" item-left primary></ion-icon>
+            <ion-label>Last out:</ion-label>
+            <ion-datetime [(ngModel)]="date"></ion-datetime>
+          </ion-item>
+    </ion-card>
+
+    <div class="action-button-div">
+        <button class="button" ion-button round>Apply</button>
+    </div>
+  </div>
+</ion-content>

@@ -1,15 +1,9 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      Menus
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content class="card-background-page">
+<ion-tabs>
+  <ion-tab [root]="nfcPage" tabTitle="In Out" tabIcon="finger-print" [rootParams]="user"></ion-tab>
+  <ion-tab [root]="leavePage" tabTitle="Apply Leave" tabIcon="calendar" [rootParams]="user"></ion-tab>
+  <ion-tab [root]="settingsPage" tabTitle="Settings" tabIcon="construct" [rootParams]="user"></ion-tab>
+</ion-tabs>
+<!-- <ion-content class="card-background-page">
   <ion-card>
     <ion-item (click)="goToNfcPage()" style="background-color: #5a83da;">
       <img src="assets/imgs/card6.png" />
@@ -25,4 +19,4 @@
       <img src="assets/imgs/card5.png" />
     </ion-item>
   </ion-card>
-</ion-content>
+</ion-content> -->

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Platform, MenuController  } from 'ionic-angular';
 import { authUserDataModel } from '../nfc/user.auth.data';
-import { NFC, Ndef } from '@ionic-native/nfc';
-import { AttendanceServiceProvider } from '../../providers/attendance-service/attendance-service';
 import { NfcPage } from '../nfc/nfc';
+import { LeavePage } from '../leave/leave';
+import { SettingsPage } from '../settings/settings';
 
 /**
  * Generated class for the NfcPage page.
@@ -20,21 +20,19 @@ export class HomePage {
 
   private user: authUserDataModel = new authUserDataModel();
   private nfcPage;
+  private leavePage;
+  private settingsPage;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public attendanceProvider: AttendanceServiceProvider,
-    public nfc: NFC,
-    public ndef: Ndef,
     public alertCtrl: AlertController,
-    public menuCtrl: MenuController,
     public platform: Platform) 
     {
       this.user = navParams.data.user;
       this.nfcPage = NfcPage;
-      this.menuCtrl.enable(true);
-
+      this.leavePage = LeavePage;
+      this.settingsPage = SettingsPage;
   }
 
   public goToNfcPage(){

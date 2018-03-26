@@ -14,3 +14,24 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.action-button-div {
+    padding-top: 10%;
+    display: block;
+    text-align: center;
+}
+
+.action-button-div .button{
+    background-color: #2a7d9e;
+    width:50%;
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    color: #123746;
+}
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+    color: #2a7d9e;
+}
+.item-md {
+    background-color: #f4f9fb;
+}

@@ -1,5 +1,5 @@
-$primary-color-1-header : #3b81ea;
-$primary-color-2-header : #4863e6;
+$primary-color-1-header : #053548;
+$primary-color-2-header : #12556f;
 
 page-login {
     .invalid {
@@ -119,6 +119,10 @@ page-login {
       font-size: 12px;
       color:  #80bbdf;;
     }
+  }
+
+  .button-md {
+    background-color:  #2a7d9e;
   }
   
   .help-button {

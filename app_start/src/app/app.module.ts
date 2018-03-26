@@ -12,6 +12,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { NfcPage } from '../pages/nfc/nfc';
+import { LeavePage } from '../pages/leave/leave';
+import { SettingsPage } from '../pages/settings/settings';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { AttendanceServiceProvider } from '../providers/attendance-service/attendance-service';
 import { TokenInterceptor } from '../providers/interceptor-service/token-Interceptor';
@@ -21,7 +23,9 @@ import { TokenInterceptor } from '../providers/interceptor-service/token-Interce
     MyApp,
     HomePage,
     LoginPage,
-    NfcPage
+    NfcPage,
+    LeavePage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,9 @@ import { TokenInterceptor } from '../providers/interceptor-service/token-Interce
     MyApp,
     HomePage,
     LoginPage,
-    NfcPage
+    NfcPage,
+    LeavePage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

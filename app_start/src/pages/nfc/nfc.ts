@@ -23,6 +23,7 @@ export class NfcPage {
 
   private user: authUserDataModel = new authUserDataModel();
   private homePage;
+  private isOkButtonClicked: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -33,14 +34,11 @@ export class NfcPage {
     public alertCtrl: AlertController,
     public platform: Platform) {
       this.homePage = HomePage;
-      this.user = navParams.data.user;
-      this.readNFC();
+      this.user = navParams.data;
   }
 
-
-
-  private readNFC() {
-   this.attendanceProvider.addAttendanceToDB(+this.user.id, attendanceTypeEnum.In);
+  public readNFC() {
+  // this.attendanceProvider.addAttendanceToDB(+this.user.id, attendanceTypeEnum.In);
      this.nfc.enabled().then(() => {
       this.platform.ready().then(() => {
         this.initNFC();
@@ -53,7 +51,8 @@ export class NfcPage {
 
   private initNFC() {
     this.showAlert("Keep your phone closer to NFC tag");
-    this.nfc.addNdefListener()
+    if(this.isOkButtonClicked){
+      this.nfc.addNdefListener()
       .subscribe(data => {
         let tagId = this.nfc.bytesToHexString(data.tag.id);
         this.addAttendancetoDB(tagId);
@@ -62,7 +61,8 @@ export class NfcPage {
         err => {
           this.showAlert(err);
           this.navCtrl.setRoot(this.homePage, { user: this.user });
-        })
+        });
+    }
   }
 
   private addAttendancetoDB(tagId: string)
@@ -89,7 +89,18 @@ export class NfcPage {
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: message,
-      buttons: ['OK']
+      buttons: [
+        {text: 'OK',
+          handler: data =>{
+              this.isOkButtonClicked = true;
+          }
+        },
+        {text: 'Cancel',
+        handler: data =>{
+            this.isOkButtonClicked = false;
+        }
+        }
+      ]
     });
     alert.present();
   }

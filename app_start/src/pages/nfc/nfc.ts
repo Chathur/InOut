@@ -48,12 +48,12 @@ export class NfcPage {
       });
      }) 
      .catch (error=>
-        this.showAlert("Please enable NFC on your device")
+        this.showBasicAlert("Please enable NFC on your device")
      )
   }
 
   private initNFC() {
-    this.showAlert("Keep your phone closer to NFC tag");
+    this.showConfirmationAlert("Keep your phone closer to NFC tag");
     if(this.isOkButtonClicked){
       this.nfc.addNdefListener()
       .subscribe(data => {
@@ -61,7 +61,7 @@ export class NfcPage {
         this.addAttendancetoDB(tagId);
       },
         err => {
-          this.showAlert(err);
+          this.showBasicAlert(err);
         });
     }
   }
@@ -78,10 +78,11 @@ export class NfcPage {
     
     this.attendanceProvider.addAttendanceToDB(+this.user.id, attendanceType).subscribe(response => {
       if(response.Data == true){
-        this.showAlert("Sucess");
+        this.showBasicAlert("Sucess");
+        this.navCtrl.setRoot(this.homePage, { user: response });
       }
       else{
-        this.showAlert("Error: Please try again");
+        this.showBasicAlert("Error: Please try again");
       }
     });
   }
@@ -92,7 +93,7 @@ export class NfcPage {
     })
   }
 
-  private showAlert(message: string) {
+  private showConfirmationAlert(message: string) {
     let alert = this.alertCtrl.create({
       title: '',
       subTitle: message,
@@ -108,6 +109,15 @@ export class NfcPage {
         }
         }
       ]
+    });
+    alert.present();
+  }
+
+  private showBasicAlert(message: string) {
+    let alert = this.alertCtrl.create({
+      title: '',
+      subTitle: message,
+      buttons: ['OK']
     });
     alert.present();
   }

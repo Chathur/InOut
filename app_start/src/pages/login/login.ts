@@ -52,6 +52,10 @@ export class LoginPage {
           if (error._body) {
             this.showToastWithCloseButton(JSON.parse(error._body).error_description);
           }
+          else if(error.error.error_description)
+          {
+            this.showToastWithCloseButton(error.error.error_description);
+          }
         }
       );
     }).then(() => this.loader.dismiss());

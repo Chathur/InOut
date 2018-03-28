@@ -16,7 +16,7 @@
 // automatically applied to the <body> element in the app.
 
 .action-button-div {
-    padding-top: 10%;
+    padding-top: 5%;
     display: block;
     text-align: center;
 }
@@ -34,4 +34,7 @@
 }
 .item-md {
     background-color: #f4f9fb;
+}
+.button-md:hover:not(.disable-hover){
+    background-color: #2a7d9e;
 }

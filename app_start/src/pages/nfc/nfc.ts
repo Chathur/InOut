@@ -25,7 +25,8 @@ export class NfcPage {
   private homePage;
   private isOkButtonClicked: boolean = false;
   public date: string;
-  public todaysAttendanceData: any  = [];
+  public todaysAttendanceData: any = {};
+  public inTime: any;
 
   constructor(
     public navCtrl: NavController,
@@ -66,20 +67,19 @@ export class NfcPage {
     }
   }
 
-  private addAttendancetoDB(tagId: string)
+  private addAttendancetoDB(tagId: String)
   {
     let attendanceType;
-    if(tagId == DOWNFLOOR_INTAG || UPPERFLOOR_INTAG){
+    if(tagId == DOWNFLOOR_INTAG || tagId == UPPERFLOOR_INTAG){
       attendanceType = attendanceTypeEnum.In
     }
-    else if(tagId == DOWNFLOOR_OUTTAG || UPPERFLOOR_OUTTAG){
+    else if(tagId == DOWNFLOOR_OUTTAG || tagId == UPPERFLOOR_OUTTAG){
       attendanceType = attendanceTypeEnum.Out;
     }
-    
     this.attendanceProvider.addAttendanceToDB(+this.user.id, attendanceType).subscribe(response => {
       if(response.Data == true){
         this.showBasicAlert("Sucess");
-        this.navCtrl.setRoot(this.homePage, { user: response });
+        this.navCtrl.setRoot(this.homePage, { user: this.user });
       }
       else{
         this.showBasicAlert("Error: Please try again");
@@ -90,6 +90,8 @@ export class NfcPage {
   private getCurrentDateInOut(){
     this.attendanceProvider.getCurrentDateInOut(+this.user.id).subscribe(response => {
       this.todaysAttendanceData = response.Data[0];
+      this.todaysAttendanceData.InTime = new Date(this.todaysAttendanceData.InTime).toISOString();
+      this.todaysAttendanceData.OutTime = new Date(this.todaysAttendanceData.InTime).toISOString();
     })
   }
 

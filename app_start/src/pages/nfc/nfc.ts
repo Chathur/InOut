@@ -5,7 +5,7 @@ import { NFC, Ndef } from '@ionic-native/nfc';
 import { AttendanceServiceProvider } from '../../providers/attendance-service/attendance-service';
 import { DOWNFLOOR_INTAG,DOWNFLOOR_OUTTAG,UPPERFLOOR_INTAG,UPPERFLOOR_OUTTAG} from '../../configurations/constants';
 import { HomePage } from '../home/home';
-
+import * as moment from 'moment';
 /**
  * Generated class for the NfcPage page.
  *
@@ -92,8 +92,8 @@ export class NfcPage {
   private getCurrentDateInOut(){
     this.attendanceProvider.getCurrentDateInOut(+this.user.id).subscribe(response => {
       this.todaysAttendanceData = response.Data[0];
-      this.todaysAttendanceData.InTime = new Date(this.todaysAttendanceData.InTime).toISOString();
-      this.todaysAttendanceData.OutTime = new Date(this.todaysAttendanceData.InTime).toISOString();
+      this.todaysAttendanceData.InTime = moment.utc(this.todaysAttendanceData.InTime).toISOString();
+      this.todaysAttendanceData.OutTime = moment.utc(this.todaysAttendanceData.OutTime).toISOString();
     })
   }
 
@@ -114,5 +114,6 @@ export class NfcPage {
     });
     alert.present();
   }
+
 
 }

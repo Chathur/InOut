@@ -8,33 +8,33 @@
 <ion-content class="cards-bg">
   <div class="header-parent">
     <img src="assets/imgs/leaveBanner.jpg">
-
-    <ion-card>
-      <ion-item>
-        <ion-icon name="calendar" item-left primary></ion-icon>
-        <ion-label>Date:</ion-label>
-        <ion-datetime [(ngModel)]="date"></ion-datetime>
-      </ion-item>
-    </ion-card>
-
-    <ion-card>
-        <ion-item>
-            <ion-icon name="time" item-left primary></ion-icon>
-            <ion-label>First in:</ion-label>
-            <ion-datetime [(ngModel)]="date"></ion-datetime>
-          </ion-item>
-    </ion-card>
-
-    <ion-card>
-        <ion-item>
-            <ion-icon name="time" item-left primary></ion-icon>
-            <ion-label>Last out:</ion-label>
-            <ion-datetime [(ngModel)]="date"></ion-datetime>
-          </ion-item>
-    </ion-card>
-
-    <div class="action-button-div">
-        <button class="button" ion-button round>Apply</button>
-    </div>
   </div>
+  <ion-card>
+    <ion-item>
+      <ion-icon name="calendar" item-left primary></ion-icon>
+      <ion-label>Date:</ion-label>
+      <ion-datetime [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-icon name="time" item-left primary></ion-icon>
+      <ion-label>First in:</ion-label>
+      <ion-datetime [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-icon name="time" item-left primary></ion-icon>
+      <ion-label>Last out:</ion-label>
+      <ion-datetime [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+  </ion-card>
+
+  <div class="action-button-div">
+    <button class="button" ion-button round>Apply</button>
+  </div>
+
 </ion-content>

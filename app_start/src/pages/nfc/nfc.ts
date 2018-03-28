@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Platform, Toast } from 'ionic-angular';
 import { authUserDataModel, attendanceTypeEnum } from './user.auth.data';
 import { NFC, Ndef } from '@ionic-native/nfc';
 import { AttendanceServiceProvider } from '../../providers/attendance-service/attendance-service';
@@ -27,6 +27,7 @@ export class NfcPage {
   public date: string;
   public todaysAttendanceData: any = {};
   public inTime: any;
+  public toast: Toast;
 
   constructor(
     public navCtrl: NavController,
@@ -35,14 +36,17 @@ export class NfcPage {
     public nfc: NFC,
     public ndef: Ndef,
     public alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     public platform: Platform) {
       this.homePage = HomePage;
       this.user = navParams.data;
       this.date = new Date().toISOString();
       this.getCurrentDateInOut();
+      
   }
 
   public readNFC() {
+    
      this.nfc.enabled().then(() => {
       this.platform.ready().then(() => {
         this.initNFC();
@@ -54,17 +58,15 @@ export class NfcPage {
   }
 
   private initNFC() {
-    this.showConfirmationAlert("Keep your phone closer to NFC tag");
-    if(this.isOkButtonClicked){
-      this.nfc.addNdefListener()
-      .subscribe(data => {
+    this.showToast("Keep your phone closer to NFC tag");
+      this.nfc.addNdefListener().subscribe(data => {
+        this.toast.dismiss();
         let tagId = this.nfc.bytesToHexString(data.tag.id);
         this.addAttendancetoDB(tagId);
       },
         err => {
           this.showBasicAlert(err);
         });
-    }
   }
 
   private addAttendancetoDB(tagId: String)
@@ -95,24 +97,13 @@ export class NfcPage {
     })
   }
 
-  private showConfirmationAlert(message: string) {
-    let alert = this.alertCtrl.create({
-      title: '',
-      subTitle: message,
-      buttons: [
-        {text: 'OK',
-          handler: data =>{
-              this.isOkButtonClicked = true;
-          }
-        },
-        {text: 'Cancel',
-        handler: data =>{
-            this.isOkButtonClicked = false;
-        }
-        }
-      ]
+  private showToast(content: string){
+    this.toast = this.toastCtrl.create({
+      message: content,
+      duration: 10000,
+      position: 'middle'
     });
-    alert.present();
+    this.toast.present();
   }
 
   private showBasicAlert(message: string) {

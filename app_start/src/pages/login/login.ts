@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -25,7 +25,7 @@ export class LoginPage {
   private loader;
   public loginForm: FormGroup;;
   private homePage;
- 
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthServiceProvider, private formBuilder: FormBuilder, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
     this.initializeLoginForm();
@@ -52,14 +52,13 @@ export class LoginPage {
           if (error._body) {
             this.showToastWithCloseButton(JSON.parse(error._body).error_description);
           }
-          else if(error.error.error_description)
-          {
+          else if (error.error.error_description) {
             this.showToastWithCloseButton(error.error.error_description);
           }
         }
       );
     }).then(() => this.loader.dismiss());
-  
+
   }
 
   private initializeLoginForm() {

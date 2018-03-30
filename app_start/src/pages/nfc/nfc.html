@@ -12,30 +12,29 @@
   <ion-card>
     <ion-item>
       <ion-icon name="calendar" item-left primary></ion-icon>
-      <ion-label>Date:</ion-label>
-      <ion-datetime [ngModel]="date"></ion-datetime>
+      <ion-label style="opacity:1">Date:</ion-label>
+      <ion-datetime [ngModel]="date" class="disabled-noOpacity" disabled></ion-datetime>
     </ion-item>
   </ion-card>
 
   <ion-card>
     <ion-item>
       <ion-icon name="time" item-left primary></ion-icon>
-      <ion-label>First in:</ion-label>
-      <ion-datetime displayFormat="h:mm A" [ngModel]="todaysAttendanceData.InTime"></ion-datetime>
+      <ion-label style="opacity:1">First in:</ion-label>
+      <ion-datetime displayFormat="h:mm A" [ngModel]="todaysAttendanceData.InTime" class="disabled-noOpacity" disabled></ion-datetime>
     </ion-item>
   </ion-card>
 
   <ion-card>
     <ion-item>
       <ion-icon name="time" item-left primary></ion-icon>
-      <ion-label>Last out:</ion-label>
-      <ion-datetime displayFormat="h:mm A" [ngModel]="todaysAttendanceData.OutTime"></ion-datetime>
+      <ion-label style="opacity:1">Last out:</ion-label>
+      <ion-datetime displayFormat="h:mm A" [ngModel]="todaysAttendanceData.OutTime" class="disabled-noOpacity" disabled></ion-datetime>
     </ion-item>
   </ion-card>
 
   <div class="action-button-div">
     <button class="button" ion-button round (click)="readNFC()">Punch</button>
   </div>
-
 
 </ion-content>

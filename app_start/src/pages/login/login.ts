@@ -37,6 +37,7 @@ export class LoginPage {
   }
 
   public onLoginClicked() {
+    debugger;
     this.initializeLoader();
 
     this.loader.present().then(() => {

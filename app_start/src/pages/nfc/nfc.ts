@@ -6,6 +6,10 @@ import { AttendanceServiceProvider } from '../../providers/attendance-service/at
 import { DOWNFLOOR_INTAG,DOWNFLOOR_OUTTAG,UPPERFLOOR_INTAG,UPPERFLOOR_OUTTAG} from '../../configurations/constants';
 import { HomePage } from '../home/home';
 import * as moment from 'moment';
+import { debounce } from 'rxjs/operators';
+import { timer } from 'rxjs/observable/timer';
+import { Subscriber } from 'rxjs/Subscriber';
+import { Subscription } from 'rxjs/Rx'
 /**
  * Generated class for the NfcPage page.
  *
@@ -28,6 +32,9 @@ export class NfcPage {
   public todaysAttendanceData: any = {};
   public inTime: any;
   public toast: Toast;
+  public listner: Subscription ;
+  clickCounter: number = 0;
+  listenCounter: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -42,7 +49,7 @@ export class NfcPage {
       this.user = navParams.data;
       this.date = new Date().toISOString();
       this.getCurrentDateInOut();
-      
+      this.listner = null;
   }
 
   public readNFC() {
@@ -59,13 +66,22 @@ export class NfcPage {
 
   private initNFC() {
     this.showToast("Keep your phone closer to NFC tag");
-      this.nfc.addNdefListener().subscribe(data => {
+    this.clickCounter++;
+    if(this.listner) { return;}
+    
+    this.listner = this.nfc.addNdefListener().subscribe(data => {
+        this.listenCounter++;
+        this.listner.unsubscribe();
+        this.listner = null;
         this.toast.dismiss();
         let tagId = this.nfc.bytesToHexString(data.tag.id);
         this.addAttendancetoDB(tagId);
+        
       },
         err => {
           this.showBasicAlert(err);
+          this.listner.unsubscribe();
+        this.listner = null;          
         });
   }
 
